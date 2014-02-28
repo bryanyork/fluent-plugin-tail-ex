@@ -16,8 +16,10 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = "0.1.1"
 
-  requires = ['fluentd', 'fluent-mixin-config-placeholders']
-  requires.each {|name| gem.add_runtime_dependency name}
-  requires += ['rake', 'flexmock']
+  #requires = ['fluentd', 'fluent-mixin-config-placeholders']
+  #requires.each {|name| gem.add_runtime_dependency name}
+  gem.add_runtime_dependency 'fluentd', '~>0.10', '>=0.10.34'
+  gem.add_runtime_dependency 'fluent-mixin-config-placeholders', '~>0.2', '>=0.2.2'
+  requires = ['rake', 'flexmock']
   requires.each {|name| gem.add_development_dependency name}
 end
