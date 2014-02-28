@@ -14,6 +14,12 @@ module Fluent
     def initialize
       super
       @ready = false
+      @parser = nil
+    end
+
+    def configure_parser(conf)
+      @parser = AsisParser.new
+      @parser.configure(conf)
     end
 
     def configure(conf)
@@ -139,6 +145,17 @@ module Fluent
         @io_handler.close
         $log.info "stop following of #{@path}"
       end
+    end
+  end
+  class AsisParser
+    include Configurable
+
+    config_param :asis_key, :string, :default => 'message'
+
+    def parse(text)
+      record = {}
+      record[@asis_key] = text
+      return Engine.now, record
     end
   end
 end

@@ -1,13 +1,13 @@
-# fluent-plugin-tail-ex, a plugin for [Fluentd](http://fluentd.org)
+# fluent-plugin-tail-ex-asis, a plugin for [Fluentd](http://fluentd.org)
 
-[![Build Status](https://secure.travis-ci.org/yosisa/fluent-plugin-tail-ex.png)](http://travis-ci.org/yosisa/fluent-plugin-tail-ex)
-
-fluent-plugin-tail-ex provides `tail_ex` input plugin.
+fluent-plugin-tail-ex-asis provides `tail_ex_asis` input plugin.
 In addition to in_tail plugin features, this plugin support more feature for comfortable.
 
 A main feature of the plugin is support path parameter expansions.
 A path parameter can be configured using glob and/or date format (strftime).
 Furthermore, the plugin append file path to the configured tag.
+
+This repo was merged with tail-asis plugin to process the message as-is with no regex applied.
 
 Note: In order to pass all tests, this plugin needs fluentd 0.10.26 or above.
 
@@ -15,7 +15,7 @@ Note: In order to pass all tests, this plugin needs fluentd 0.10.26 or above.
 
 Install it using gem:
 
-    $ gem install fluent-plugin-tail-ex
+    $ gem install fluent-plugin-tail-ex-asis
 
 ## Configuration
 
@@ -38,8 +38,8 @@ Sample configuration:
       type tail_ex
       path /var/log/**.log,/var/log/by-date/%Y/messages.%m/%Y%m%d
       tag tail_ex.*.${hostname}
-      format /^(?<message>.*)$/
       pos_file /var/tmp/fluentd.pos
+      asis_key message
       refresh_interval 1800
     </source>
 
