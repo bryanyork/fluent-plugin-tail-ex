@@ -2,8 +2,8 @@ module Fluent
   require 'fluent/plugin/in_tail'
   require 'fluent/mixin/config_placeholders'
 
-  class TailExInput < TailInput
-    Plugin.register_input('tail_ex', self)
+  class TailExAsisInput < TailInput
+    Plugin.register_input('tail_ex_asis', self)
 
     config_param :expand_date, :bool, :default => true
     config_param :read_all, :bool, :default => true
@@ -68,7 +68,7 @@ module Fluent
           pe = nil
         end
 
-        watcher = TailExWatcher.new(path, @rotate_wait, pe, &method(:receive_lines))
+        watcher = TailExAsisWatcher.new(path, @rotate_wait, pe, &method(:receive_lines))
         watcher.attach(@loop)
         @watchers[path] = watcher
       end
@@ -116,7 +116,7 @@ module Fluent
       end
     end
 
-    class TailExWatcher < TailWatcher
+    class TailExAsisWatcher < TailWatcher
       def initialize(path, rotate_wait, pe, &receive_lines)
         @parent_receive_lines = receive_lines
         super(path, rotate_wait, pe, &method(:_receive_lines))

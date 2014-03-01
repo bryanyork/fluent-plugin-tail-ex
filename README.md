@@ -7,7 +7,8 @@ A main feature of the plugin is support path parameter expansions.
 A path parameter can be configured using glob and/or date format (strftime).
 Furthermore, the plugin append file path to the configured tag.
 
-This repo was merged with tail-asis plugin to process the message as-is with no regex applied.
+
+### This repo was merged with tail-asis plugin to process the message as-is with no regex applied.
 
 Note: In order to pass all tests, this plugin needs fluentd 0.10.26 or above.
 
@@ -35,7 +36,7 @@ Moreover, all configuration parameters support some placeholders which provided 
 Sample configuration:
 
     <source>
-      type tail_ex
+      type tail_ex_asis
       path /var/log/**.log,/var/log/by-date/%Y/messages.%m/%Y%m%d
       tag tail_ex.*.${hostname}
       pos_file /var/tmp/fluentd.pos
