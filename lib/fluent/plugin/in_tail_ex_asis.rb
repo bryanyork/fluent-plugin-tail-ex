@@ -8,7 +8,8 @@ module Fluent
     config_param :expand_date, :bool, :default => true
     config_param :read_all, :bool, :default => true
     config_param :refresh_interval, :integer, :default => 3600
-
+    config_param :asis_key, :string, :default => 'message'
+    include Configurable
     include Fluent::Mixin::ConfigPlaceholders
 
     def initialize
@@ -16,9 +17,19 @@ module Fluent
       @ready = false
       @parser = nil
     end
-
+    class AsisParser
+      include Configurable
+      
+      config_param :asis_key, :string, :default => 'message'
+      
+      def parse(text)
+        record = {}
+        record[@asis_key] = text
+        return Engine.now, record
+      end
+    end
     def configure_parser(conf)
-      @parser = AsisParser.new
+      @parser = TailExAsisInput::AsisParser.new
       @parser.configure(conf)
     end
 
@@ -144,15 +155,6 @@ module Fluent
         @io_handler.on_notify
         @io_handler.close
         $log.info "stop following of #{@path}"
-      end
-    end
-    class AsisParser
-      include Configurable
-      config_param :asis_key, :string, :default => 'message'
-      def parse(text)
-        record = {}
-        record[@asis_key] = text
-        return Engine.now, record
       end
     end
   end
