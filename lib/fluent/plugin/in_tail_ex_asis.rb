@@ -146,16 +146,14 @@ module Fluent
         $log.info "stop following of #{@path}"
       end
     end
-  end
-  class AsisParser
-    include Configurable
-
-    config_param :asis_key, :string, :default => 'message'
-
-    def parse(text)
-      record = {}
-      record[@asis_key] = text
-      return Engine.now, record
+    class AsisParser
+      include Configurable
+      config_param :asis_key, :string, :default => 'message'
+      def parse(text)
+        record = {}
+        record[@asis_key] = text
+        return Engine.now, record
+      end
     end
   end
 end
