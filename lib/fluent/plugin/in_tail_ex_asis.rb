@@ -114,8 +114,8 @@ module Fluent
 
     def shutdown
       @refresh_trigger.detach
-      stop_watch(@watchers.keys, true)
       @loop.stop
+      stop_watch(@watchers.keys, true)
       @thread.join
       @pf_file.close if @pf_file
     end
